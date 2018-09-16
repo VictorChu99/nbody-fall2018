@@ -1,3 +1,11 @@
+/**
+ * @author Victor Chu
+ * netid: vic4
+ * email: vic4@duke.edu
+ * 
+ * Simulation program for the NBody assignment
+ */
+
 
 public class Body {
 	//REMINDER: Make all methods public and all instance
@@ -11,7 +19,15 @@ public class Body {
 	private String myFileName;
 	//Two constructors
 	
-	//this constructor will just assign all the instance variables above
+	/**
+	 * this constructor will just assign all the instance variables above
+	 * @param xp
+	 * @param yp
+	 * @param xv
+	 * @param yv
+	 * @param mass
+	 * @param filename
+	 */
 	public Body(double xp, double yp, double xv, double yv, double mass, String filename)
 	{
 		myXPos = xp;
@@ -24,12 +40,14 @@ public class Body {
 		
 	}
 	
-	//this constructor takes our instance variables from the body we are passing in
-	//and just copies the instance variables so we have two bodies now
-	//but with identical instance variables such as xPos
+	/**
+	 * and just copies the instance variables so we have two bodies now
+	   but with identical instance variables such as xPos
 	
-	//SIDENOTE: the reason we are using getters is because our instance variables are private
-	//therefore, use getter to access it
+	   SIDENOTE: the reason we are using getters is because our instance variables are private
+       therefore, use getter to access it
+	 * @param b
+	 */
 	public Body(Body b)
 	{
 		//other way would be to use this
@@ -42,44 +60,90 @@ public class Body {
 		myFileName = b.getName();
 	}
 	
-	//Make all these getters to access private instance variables
+	//The methods that are named get(?) are called getters
+	//they access the instance variabesl
+	
+	/**
+	 * 
+	 * @return instance variables
+	 */
+	/**
+	 * 
+	 * @return myXPos
+	 */
 	public double getX()
 	{
 		return myXPos;
 	}
+	
+	/**
+	 * 
+	 * @return myYPos
+	 */
 	public double getY()
 	{
 		return myYPos;
 	}
+	/**
+	 * 
+	 * @return myXVel
+	 */
 	public double getXVel()
 	{
 		return myXVel;
 	}
+	
+	/**
+	 * 
+	 * @return myYVel
+	 */
 	public double getYVel()
 	{
 		return myYVel;
 	}
+	
+	/**
+	 * 
+	 * @return myMass
+	 */
 	public double getMass()
 	{
 		return myMass;
 	}
+	
+	/**
+	 * 
+	 * @return myFileName
+	 */
 	public String getName()
 	{
 		return myFileName;
 	}
 	
 	
-	//this program just calculates the distance between two bodies
+	
+	//this method just calculates the distance between two bodies
+	/**
+	 * 
+	 * @param b
+	 * @return distance between two bodies
+	 */
 	public double calcDistance(Body b)
 	{
 		double distance;
 		//the reason we are using myXPos-b.myXPos is to refer to our main
-		//body, but also our copy which is b.myXPos
+		//body, but also our copy which is b.myXPos. Two objects
 		distance = Math.sqrt(Math.pow(myXPos-b.myXPos, 2) + Math.pow(myYPos-b.myYPos,2));
 		return distance;
 	}
 	
-	//using body p instead. Straightforward in writing this. Not much to say about this one
+	
+	
+	/**
+	 * using body p instead. Straightforward in writing this. Not much to say about this one
+	 * @param p
+	 * @return force
+	 */
 	public double calcForceExertedBy(Body p)
 	{
 		double bigG = (6.67e-11);//uses java scientfic notation
@@ -91,10 +155,11 @@ public class Body {
 	}
 
 	
-	//FIXME: Ask negative vs positive. Why does the order of positions matter:
-	//Answer: Direction matters in this case
-	//straightforward again. Tricky part was making sure that numbers were
-	//positive or negative
+	/**
+	 * This method calculates the force exerted by the x-force vector. 
+	 * @param p
+	 * @return fx(change in x)
+	 */
 	public double calcForceExertedByX(Body p)
 	{
 		double dx = (p.myXPos - myXPos);
@@ -102,7 +167,13 @@ public class Body {
 		double fx = (dx*force)/calcDistance(p);
 		return fx;
 	}
-	//same thing as the previous example of calcForceExertedByX
+	
+	
+	/**
+	 * same thing as the previous example of calcForceExertedByX
+	 * @param p
+	 * @return fx(change in y)
+	 */
 	public double calcForceExertedByY(Body p)
 	{
 		double dy = (p.myYPos - myYPos);
@@ -110,18 +181,23 @@ public class Body {
 		double fx = (dy*force)/calcDistance(p);
 		return fx;
 	}
+		
 	
-	
-	//this method returns the net force on the body
-	//by all other bodies in the array. 
-	//we do this by summing all the forces of those arrays
+	/**
+	 * this method returns the net force on the body
+	  by all other bodies in the array. 
+	  we do this by summing all the forces of those elements
+	   the array contains each body. 
+	 * @param bodies
+	 * @return netforce by x. 
+	 */
 	public double calcNetForceExertedByX(Body[] bodies)
 	{
 		double forceSum = 0;//force sum for all the vectors
 		for(Body b: bodies)//we will loop through all the elements in the array
 		{
-			if(!b.equals(this))//this ensures that we don't accidently count this object
-								//when we are looping through
+			if(!b.equals(this))//this ensures that we don't accidently count 'this' object
+								//when we are looping through. Don't want to self reference
 			{
 				forceSum = calcForceExertedByX(b)+forceSum;//call calcForce and add to forceSum
 			}
@@ -129,7 +205,12 @@ public class Body {
 		return forceSum;
 	}
 	
-	//same as calcNetForceExertedByX but with Y instead
+	
+	/**
+	 * same as calcNetForceExertedByX but with Y instead
+	 * @param bodies
+	 * @return net force by y
+	 */
 	public double calcNetForceExertedByY(Body[] bodies)
 	{
 		double forceSum = 0;
@@ -144,9 +225,17 @@ public class Body {
 	}
 	
 	
-	
-	//this method will update our position and velocity
-	//given a dT, and xy force.
+	/**
+	 * this method will update our position and velocity
+	   given a dT, and xy force.
+	   this is a mutator since we actually changing our
+	   instance variables
+	 * 
+	 * @param deltaT
+	 * @param xforce
+	 * @param yforce
+	 * @returns new position and velocity
+	 */
 	public void update(double deltaT, double xforce, double yforce)
 	{//deltaT are small time steps. xforce and yforce are just the net forces
 		double accelX = xforce/myMass;
@@ -154,7 +243,7 @@ public class Body {
 		//make an acceleration variable
 		
 		
-		//these give us our new veloicty
+		//these give us our new velocity
 		double nvx = myXVel + deltaT * accelX;
 		double nvy = myYVel + deltaT * accelY;
 		
@@ -163,7 +252,7 @@ public class Body {
 		double ny = myYPos + deltaT*nvy;
 		
 		
-		//we are just updating our instance variables here
+		//we are just updating our instance variables here 
 		myXPos = nx;
 		myYPos = ny;
 		myXVel = nvx;
@@ -171,7 +260,11 @@ public class Body {
 				
 	}
 
-	public void draw()
+	
+	/**
+	 * simulates our bodies in space
+	 */
+	public void draw()//this function is just actually simulating the image on the screen. 
 	{
 		StdDraw.picture(myXPos,myYPos, "images/"+myFileName);
 	}

@@ -1,7 +1,7 @@
-	
-
 /**
- * @author YOUR NAME THE STUDENT IN 201
+ * @author Victor Chu
+ * netid: vic4
+ * email: vic4@duke.edu
  * 
  * Simulation program for the NBody assignment
  */
@@ -76,7 +76,7 @@ public class NBody {
 	}
 	
 	public static void main(String[] args) throws FileNotFoundException{
-		double totalTime = 157788000.0;
+		double totalTime = 157788000.0;//time for which this program can run
 		double dt = 25000.0;
 		
 		String fname= "./data/planets.txt";
@@ -113,14 +113,14 @@ public class NBody {
 			// with dt and corresponding xforces, yforces values
 			for (int i = 0; i < bodies.length; i++)
 			{
-				bodies[i].update(dt, xforces[i], yforces[i]);
+				bodies[i].update(dt, xforces[i], yforces[i]);//calls update on each body
 			}
 			
 			
 			StdDraw.picture(0,0,"images/starfield.jpg");
 			
 			// TODO: loop over all bodies and call draw on each one
-			for(Body b: bodies)
+			for(Body b: bodies)//for each loop to go over all the bodies
 			{
 				b.draw();
 			}		
