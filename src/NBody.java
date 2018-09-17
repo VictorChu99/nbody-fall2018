@@ -10,7 +10,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class NBody {
+public class NBody{
 	
 	/**
 	 * Read the specified file and return the radius
